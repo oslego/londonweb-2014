@@ -1,7 +1,7 @@
 The Expressive Web: CSS Shapes, Masks, Blend Modes and Regions
 ===
 
-Slides from my talk at [London Web](www.meetup.com/londonweb/events/139411362/), February 2014.
+Slides from my talk at [London Web](http://www.meetup.com/londonweb/events/139411362/), February 2014.
 
 
 HTML slide deck is using cutting-edge CSS features for demonstration purposes. Intended to demo in [Google Chrome Canary](https://www.google.com/intl/en/chrome/browser/canary.html) with "Experimental Web Platform Features" flag turned on in `chrome://flags`.
