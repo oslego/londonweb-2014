@@ -56,7 +56,7 @@
                 CSS Regions
               </li>
               <li>
-                CSS Blending
+                CSS Blend Modes
               </li>
               <li>
                 CSS Masking
@@ -258,6 +258,19 @@
         </section>
         
         <section data-state="blendingbg">
+          <h2>Background Blending</h2>
+<pre><code>
+  /* blend background images of the same element */                
+  .element {
+    background: url(image1.png), url(image2.png);
+    background-blend-mode: overlay;
+  }
+
+</code></pre>
+        </section>
+        
+        
+        <section data-state="blendingbg">
           <h2>Blend modes</h2>
           <div class="side-by-side">
 
@@ -333,18 +346,6 @@
           </a>
         </section>
         
-        <section data-state="blendingbg">
-          <h2>Background Blending</h2>
-<pre><code>
-  /* blend background images of the same element */                
-  .element {
-    background: url(image1.jpg), url(image2.jpg);
-    background-blend-mode: overlay;
-  }
-  
-</code></pre>
-        </section>
-
         <section data-state="blendingbg">
           <h2>Element Blending</h2>
 <pre><code>
