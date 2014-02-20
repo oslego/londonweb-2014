@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>The Expressive Web - CSS Shapes, Masks, Blend Modes and Regions </title>
+
+		<meta name="description" content="CSS Regions, CSS Blending, CSS Shapes, CSS Masking">
+		<meta name="author" content="Razvan Caliman">
+
+		<meta name="deck" content="reveal.js by Hakim el Hattab (@hakimel)">
+		
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/adobe-theme.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+		
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+		
+    <script src="http://use.edgefonts.net/lato.js"></script>
+	</head>
+
+	<body>
+
+		<div class="reveal">
+		    
+      <a href="http://html.adobe.com"><img src="resources/adobelogo.svg" id="logo" alt="" /></a>
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<section>
+          <h1>The Expressive Web</h1>
+          <h2>CSS Shapes, Masks, <span class="no-break">Blend Modes</span> and Regions </h2>
+					<p>
+						<a href="http://razvancaliman.com">Razvan Caliman</a> / <a href="http://twitter.com/razvancaliman">@razvancaliman</a>
+					</p>
+				</section>
+				
+        <section>
+            <h2>Overview</h2>
+            <ul class="toc">
+              <li>
+                CSS Regions
+              </li>
+              <li>
+                CSS Blending
+              </li>
+              <li>
+                CSS Masking
+              </li>
+              <li>
+                CSS Shapes
+              </li>
+            </ul>
+        </section>
+                
+        <section data-state="photo">
+            <img src="resources/travel/ipad_landscape_Page_6.jpg" alt="" />
+        </section>
+
+        <section data-state="regionsbg">
+            <h1>CSS Regions</h1>
+            <img src="resources/cssregions-illustration.png" alt="illustration of content flowing from one region to another" width="50%" />
+        </section>
+        
+        <section data-state="regionsbg">
+            <p>
+                <img src="resources/slide_cssregions" alt="illustration of complex layout with regions" width="100%" />
+            </p>
+        </section>
+        
+        <section data-state="regionsbg">
+<pre><code>
+  .content {
+    /* collect content into a named flow */
+    flow-into: myFlow;
+  }
+
+  .region {
+    /* render the content from the named flow */
+    flow-from: myFlow;
+  }
+
+</code></pre>
+        </section>
+        
+        <section data-state="regionsbg">
+          <img src="resources/flow-regions.png" width="100%" alt="Illustration of flows and regions" />
+        </section>
+
+        <section data-state="regionsbg">
+          <a href="http://adobe-webplatform.github.io/Demo-for-National-Geographic-Orphan-Elephants/">
+            <img src="resources/css-regions-elephants.jpg" width="100%" alt="Demo of CSS Regions with viewport-height units." />
+          </a>
+          <a href="http://adobe-webplatform.github.io/Demo-for-National-Geographic-Orphan-Elephants/">
+            CSS Regions with viewport height units
+          </a>  
+        </section>
+
+        <section data-state="regionsbg">
+            <h2>Markup Separation</h2>
+<pre><code>
+  &lt;!-- content: semantic markup --&gt;
+  &lt;article&gt; 
+    &lt;h1&gt;Title&lt;/h1&gt;
+    &lt;p&gt;...&lt;/p&gt;    
+  &lt;/article&gt;
+
+  &lt;!-- layout: helper markup --&gt;
+  &lt;div class=&quot;region&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;region&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;region&quot;&gt;&lt;/div&gt;  
+
+</code></pre>
+        </section>
+        
+        <section data-state="regionsbg">
+          <a href="http://adobe-webplatform.github.io/regions-adaptive/">
+            <img src="resources/adaptve-ui-regions-illustration.png" width="100%" alt="Illustration of adaptive web app UI with CSS Regions" />
+          </a>
+          <a href="http://adobe-webplatform.github.io/regions-adaptive/">
+            Adaptive web app UI with CSS Regions
+          </a>  
+        </section>
+        
+        <section data-state="regionsbg">
+            <h2>Aggregate content</h2>
+<pre><code>
+  /* collect content from different places */
+  header nav, 
+  footer a {
+    flow-into: menuFlow;
+  }
+
+  #menu {
+    flow-from: menuFlow;
+  }
+
+</code></pre>
+        </section>
+        
+        <section data-state="regionsbg">
+          <a href="http://codepen.io/oslego/full/tdHEg" target="_blank">
+            <img src="resources/regions-menu.png" alt="" />
+          </a>
+        </section>
+        
+        <section data-state='alert'>
+            <h2><small>Regions are only</small> <br />Visual Containers</h2>
+            <aside class="notes">
+                No DOM manipulation (parentNode). <br />
+                No CSS inheritance
+            </aside>
+        </section>
+        
+        <section data-state="regionsbg">
+            <h2>CSS Regions Status</h2>
+            <p><a href="http://www.w3.org/TR/css3-regions/">W3C Working Draft</a> - Adobe, Microsoft</p>
+            
+            <div class="side-by-side">
+              <div class="side">
+                <img src="resources/webkit.png" alt="Webkit browser logo" />
+              </div>
+              <div class="side">
+                <img src="resources/safari-ios-7.png" alt="iOS 7 logo" />
+              </div>
+              <div class="side">
+                <img src="resources/ie-256.png" class="partial" alt="Internet Explorer browser logo" />
+              </div>
+              <div class="side">
+                <img src="resources/chrome.png" alt="Chrome browser logo" />
+              </div>
+            </div>
+        </section>
+        
+        <section data-state="regionsbg">
+          <a href="http://alistapart.com/blog/post/css-regions-considered-harmful" target="_blank">
+            <img src="resources/regions-hakon.png" alt="" />
+          </a>
+        </section>
+        
+        <section data-state="regionsbg">
+          <a href="http://flippinawesome.org/2014/01/27/css-regions-matter/" target="_blank">
+            <img src="resources/regions-sara.png" alt="" />
+          </a>
+        </section>
+        
+        <section data-state="regionsbg">
+            <h2>CSS Regions Status</h2>
+            <p><a href="http://www.w3.org/TR/css3-regions/">W3C Working Draft</a> - Adobe, Microsoft</p>
+            
+            <div class="side-by-side">
+              <div class="side">
+                <img src="resources/webkit.png" alt="Webkit browser logo" />
+              </div>
+              <div class="side">
+                <img src="resources/safari-ios-7.png" alt="iOS 7 logo" />
+              </div>
+              <div class="side">
+                <img src="resources/ie-256.png" class="partial" alt="Internet Explorer browser logo" />
+              </div>
+            </div>
+        </section>
+        
+        <section data-state='blendingbg'>
+            <h1>CSS Blending</h1>
+            <img src="resources/slide_csscompositing.png" alt="" />
+        </section>
+
+        <section data-state='blendingbg'>
+
+          <div id="blending-comparison" class="side-by-side">
+            <div class="side">
+              <p>simple alpha compositing</p>
+              <figure></figure>
+            </div>                         
+            
+            <div class="side">
+              <p>blend-mode: overlay</p>
+              
+              <figure class="blended"></figure>
+            </div>
+          </div>
+          
+        </section>
+
+        <section data-state='blendingbg'>
+          <div id="blending-illustration">
+            
+            <div class="layer source">
+              <p>source</p>
+              <figure></figure>
+            </div>
+
+            <div class="layer destination">
+              <p>backdrop</p>
+              <figure></figure>
+            </div>
+
+            <div class="layer result">
+              <p>blended result</p>
+              <figure></figure>
+            </div>
+          </div>
+        </section>
+        
+        <section data-state="blendingbg">
+          <h2>Blend modes</h2>
+          <div class="side-by-side">
+
+            <div class="side">
+              <ul>
+                <li>
+                  normal
+                </li>
+                <li>
+                  screen
+                </li>
+                <li>
+                  multiply
+                </li>
+                <li>
+                  overlay
+                </li>
+                <li>
+                  darken
+                </li>
+                <li>
+                  lighten
+                </li>
+                <li>
+                  color-dodge
+                </li>
+                <li>
+                  color-burn
+                </li>
+              </ul>
+            </div>                         
+            
+            <div class="side">
+              <ul>
+
+                <li>
+                  hard-light
+                </li>
+                <li>
+                  soft-light
+                </li>
+                <li>
+                  difference
+                </li>
+                <li>
+                  exclusion
+                </li>
+                <li>
+                  hue
+                </li>
+                <li>
+                  saturation
+                </li>
+                <li>
+                  color
+                </li>
+                <li>
+                  luminosity
+                </li>
+              </ul>
+            </div>
+          </div> 
+          
+          <p>
+            <br />
+            <a href="http://www.w3.org/TR/compositing-1/#blending">http://www.w3.org/TR/compositing-1/#blending</a>
+          </p>
+        </section>
+        
+        <section data-state="blendingbg">
+          <a href="http://oslego.github.io/cssblending" target="_blank">
+            <img src="resources/blending-tshirt.png" alt="" />
+          </a>
+        </section>
+        
+        <section data-state="blendingbg">
+          <h2>Background Blending</h2>
+<pre><code>
+  /* blend background images of the same element */                
+  .element {
+    background: url(image1.jpg), url(image2.jpg);
+    background-blend-mode: overlay;
+  }
+  
+</code></pre>
+        </section>
+
+        <section data-state="blendingbg">
+          <h2>Element Blending</h2>
+<pre><code>
+  div { background-image: url(texture.png); }
+  
+  p {
+    mix-blend-mode: overlay;
+    font-family: "Mythos Std";
+  }
+    
+</code></pre>
+          <img src="resources/overlay-text.png" alt="" height='35%'/>
+        </section>
+        
+        <section data-state="blendingbg">
+
+            <h2>CSS Compositing and Blending Status</h2>
+            <p><a href="http://www.w3.org/TR/compositing-1/">W3C Working Draft</a> - Adobe, Canon</p>
+            
+            <div class="side-by-side">
+              <div class="side">
+                <img src="resources/webkit.png" class="partial" alt="Webkit browser logo" />
+              </div>
+              <div class="side">
+                <img src="resources/chrome.png" class="partial" alt="Chrome browser logo" />
+              </div>
+              <div class="side">
+                <img src="resources/firefox.png" class="partial" alt="Firefox browser logo" />
+              </div>
+            </div>
+        </section>
+        
+        
+        <section data-state="maskingbg">
+            <h1>CSS Masking</h1>
+            <img src="resources/css-masking.png" alt="" />
+        </section>
+        
+        <section data-state="maskingbg">
+            <h2>clipping <em>vs</em> masking</h2>
+        </section>
+
+        <section data-state="maskingbg">
+          <h2>Clipping</h2>
+<pre><code>
+  .element {
+    /* clip the element to a circle */
+    clip-path: circle(100px at 50% 50%);
+  }
+
+</code></pre>
+        </section>
+
+        <section data-state="maskingbg">
+          <h2>Clipping with SVG</h2>
+<pre><code>
+  &lt;style&gt;
+    .element {
+      /* clip the element using SVG */
+      clip-path: url(#clipping);
+    }
+  &lt;/style&gt;
+
+  &lt;svg&gt;
+    &lt;defs&gt;
+      &lt;clipPath id=&quot;clipping&quot;&gt;
+        &lt;circle cx=&quot;50&quot; cy=&quot;50&quot; r=&quot;10&quot;&gt;&lt;/circle&gt;
+        &lt;path d=&quot;M90,30c0-5.523-4.477-10 ...&quot;/&gt;
+      &lt;/clipPath&gt;
+    &lt;/defs&gt;
+  &lt;/svg&gt;
+
+</code></pre>
+        </section> 
+
+        <section data-state="maskingbg">
+          <h2>Masking</h2>
+<pre><code>
+  .element {
+    /* use an image as a mask */
+    mask-image: url(mask.png);
+  }
+
+</code></pre>
+        </section>
+
+        <section data-state="maskingbg">
+            <img src="resources/mask-type-illustration.png" alt="" />
+        </section>
+
+
+        <section data-state="maskingbg">
+          <h2>Masking with SVG</h2>
+<pre><code>
+  &lt;style&gt;
+    .element {
+      /* use a &lt;mask&gt; element as mask */
+      mask-image: url(#mask);
+    }
+  &lt;/style&gt;
+
+  &lt;svg&gt;
+    &lt;defs&gt;
+      &lt;mask id=&quot;mask&quot;&gt;
+        &lt;circle cx=&quot;50&quot; cy=&quot;50&quot; r=&quot;10&quot;&gt;&lt;/circle&gt;
+      &lt;/mask&gt;
+    &lt;/defs&gt;
+  &lt;/svg&gt;
+
+</code></pre>
+        </section>
+
+
+        <section data-state="maskingbg">
+
+            <h2>CSS Masking Status</h2>
+            <p><a href="http://www.w3.org/TR/css-masking/">W3C Working Draft</a> - Adobe, Mozilla, Google</p>
+
+            <div class="side-by-side">
+              <div class="side">
+                <img src="resources/webkit.png" alt="Webkit browser logo" class="partial" />
+              </div>
+              <div class="side">
+                <img src="resources/chrome.png" alt="Chrome browser logo" class="partial" />
+              </div>
+              <div class="side">
+                <img src="resources/firefox.png" alt="Firefox browser logo" class="partial" />
+              </div>
+            </div>
+        </section>
+
+        <section data-state="maskingbg">
+          <a href="http://www.html5rocks.com/en/tutorials/masking/adobe/"  target="_blank"><img src="resources/css-masking-html5rocks.png" alt="" /></a>
+          <a href="http://www.html5rocks.com/en/tutorials/masking/adobe/" target="_blank">CSS Masking on html5rocks.com</a>
+        </section>
+        
+        <section data-state="maskingbg">
+          <a href="http://adobe-webplatform.github.io/Demo-for-Food-Network-Cupcakes/src/" target="_blank">
+            <img src="resources/masking-blending-cupcakes.png" alt="" />
+          </a>
+        </section>
+        
+        <section>
+          <h2>Shapes in CSS</h2>
+          
+          <div id="shapes-illustration">
+            <div class="fragment"></div>
+            <div class="fragment"></div>
+            <div class="fragment"></div>
+            <div class="fragment"></div>
+            <div class="fragment"></div>
+            <div class="fragment"></div>
+            <div class="fragment"></div>
+            <div class="fragment"></div>
+          </div>
+          
+        </section>
+
+        <section>
+                                  
+          <a href="http://css-tricks.com/examples/ShapesOfCSS/" target="_blank">
+            <img src="resources/csstricks-shapes.png" alt="" />
+          </a>
+          
+        </section>
+
+        <section>
+            <h1>CSS Shapes</h1>
+            <img src="resources/grid_cssexclusions.png" alt="" />
+        </section>
+
+        <section>
+            <h2>Shape Inside</h2>
+<pre><code>
+  /* wrap the content inside a circle */
+  #content { 
+    shape-inside: circle(100px at 50% 50%);
+  }
+  
+</code></pre>
+        <img src="resources/shape-inside.png" alt="" height='35%'/>
+
+        </section>
+
+        <section>
+            <h2>Shape Outside</h2>
+<pre><code>
+  #coffee {
+    float: left;
+    shape-outside: circle(100px at 50% 50%);
+  }
+
+</code></pre>
+        <img src="resources/shape-outside.png" alt="" height='35%'/>
+        </section>
+
+        <section>
+            <h2>Complex shapes</h2>
+<pre><code>
+  .content{
+    /* shape defined by points of a polygon */
+    shape-inside: polygon(x1, y1 x2, y2 ... );
+  }
+ 
+  .content{
+    /* shape defined by the alpha levels of an image */
+    shape-inside: url(image.png);
+    shape-image-threshold: 0.5;
+  }
+  
+</code></pre>
+        </section>
+        
+        <section> 
+          <a href="http://adobe-webplatform.github.io/Demo-for-Alice-s-Adventures-in-Wonderland/" target="_blank"><img src="resources/css-shapes-alice.jpg" alt="" /></a>
+          <a href="http://adobe-webplatform.github.io/Demo-for-Alice-s-Adventures-in-Wonderland/">Enhancing Visual Storytelling with CSS Shapes</a>
+        </section>
+        
+        <section>
+            <h2>CSS Shapes status</h2>
+            <p><a href="http://www.w3.org/TR/css-shapes/">W3C Working Draft</a> - Adobe, Microsoft</p>
+            <div class="side-by-side">
+              <div class="side">
+                <img src="resources/webkit.png" class="partial" alt="Webkit browser logo" />
+              </div>
+              <div class="side">
+                <img src="resources/chrome.png" class="partial" alt="Chrome browser logo" />
+              </div>
+              <div class="side">
+                <img src="resources/chrome-canary.png" class="partial" alt="Chrome Canary browser logo" />
+              </div>
+              
+            </div>
+        </section>
+
+        <section id="recap">
+            <div class="side-by-side">
+              <div class="side">
+                <p>CSS Regions</p>
+                <img src="resources/cssregions-illustration.png" alt="illustration of content flowing from one region to another"  />
+              </div>
+              
+              <div class="side">
+                <p>CSS Blending</p>
+                <img src="resources/slide_csscompositing.png" alt="" />
+              </div>
+              
+              <div class="side">
+                <p>CSS Shapes</p>
+                <img src="resources/grid_cssexclusions.png" alt="" />
+              </div>
+              
+              <div class="side">
+                <p>CSS Masking</p>
+                <img src="resources/css-masking.png" alt="" />
+              </div>
+              
+            </div>
+        </section>
+        
+        <section>
+          <h2>
+            <a href="//html.adobe.com">html.adobe.com</a>
+          </h2>
+        </section>
+
+        <section>
+          <h1>end</h1>
+          <h2>
+              <a href="http://twitter.com/razvancaliman">@razvancaliman</a>
+          </h2> 
+        </section>
+
+
+				
+        <section data-state="resources">
+            <h2>Resources</h2>
+            <a href="http://blogs.adobe.com/webplatform/">Adobe Web Platform</a> blog
+            
+            <p>CSS Regions</p>
+            <ul>
+                <li>
+                    <a href="http://html.adobe.com/webstandards/cssregions/">CSS Regions</a> on html.adobe.com
+                </li>
+                <li>
+                    <a href="http://docs.webplatform.org/wiki/tutorials/css-regions">CSS Regions</a> tutorial
+                </li>
+                <li>
+                    <a href="http://www.w3.org/TR/css3-regions/">CSS Regions</a> W3C Proposal
+                </li>
+            </ul>
+            
+            <p>CSS Shapes</p>
+            <ul>
+                <li>
+                    <a href="http://html.adobe.com/webstandards/cssshapes/">CSS Shapes</a> on html.adobe.com
+                </li>
+                <li>
+                    <a href="http://www.w3.org/TR/css-shapes/">CSS Shapes</a> W3C Proposal
+                </li>
+                <li>
+                    <a href="http://hansmuller-webkit.blogspot.co.uk/">Hans Muller</a>'s blog
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Credits</h2>
+            <ul>
+                <li>
+                    <a href="http://lab.hakim.se/reveal-js/">Reveal.js</a> created by <a href="http://hakim.se">Hakim el Hattab</a>
+                </li>
+            </ul>
+
+        </section>
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: false,
+				progress: true,
+				history: true,
+				center: true,
+				rollingLinks: false,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+          // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
